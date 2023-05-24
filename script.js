@@ -40,18 +40,13 @@ const sortNumsBubble = () => {
     const numArray = getArray();
 
     for (let i = 0; i < numArray.length; i++) {
-
-        let check = false;
-
-        for (let j = 0; j < numArray.length - 1; j++) {
-            if (numArray[j] < numArray[j + 1]) {
+        for (let j = numArray.length - 1; j > i; j--) {
+            if (numArray[j] > numArray[j - 1]) {
                 const num = numArray[j];
-                numArray[j] = numArray[j + 1]
-                numArray[j + 1] = num;
-                check = true;
+                numArray[j] = numArray[j - 1];
+                numArray[j - 1] = num;
             }
         }
-        if (!check) break;
     }
     drawHistogram(numArray)
 }
