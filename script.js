@@ -20,21 +20,24 @@ const drawHistogram = (numArray) => {
     })
 
 }
+const getArray = () => {
+    return inputElement.value.trim().split(" ").filter(Number).map(Number);
+}
 
 const drawDefault = () => {
-    const numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
+    const numArray = getArray();
     drawHistogram(numArray);
 }
 
 const sortNums = () => {
-    const numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
+    const numArray = getArray();
+
     numArray.sort((a, b) => a - b);
     drawHistogram(numArray);
 }
 
 const sortNumsBubble = () => {
-
-    const numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
+    const numArray = getArray();
 
     for (let i = 0; i < numArray.length; i++) {
 
