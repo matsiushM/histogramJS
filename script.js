@@ -8,7 +8,7 @@ const histogram = () => {
 
     const creatButtonSort = (elementName) => {
         const button = document.createElement("button");
-        button.textContent = elementName.replace(/[_-]/," ");
+        button.textContent = elementName.replace(/[_-]/, " ");
         button.id = `button-${elementName}`;
         return button;
     }
@@ -33,6 +33,16 @@ const histogram = () => {
 
     const drawHistogram = () => {
         table.innerHTML = "";
+        containerButtonSorts.innerHTML = ""
+        const buttonSort = creatButtonSort("sort");
+        const buttonSortBubble = creatButtonSort("sort_bubble");
+
+        containerButtonSorts.append(buttonSort, buttonSortBubble);
+
+
+        buttonSortBubble.addEventListener("click", sortNumsBubble)
+        buttonSort.addEventListener("click", sortNums);
+
         const maxNum = Math.max(...numArray);
 
         numArray.forEach((num) => {
@@ -42,22 +52,22 @@ const histogram = () => {
             element.innerText = num;
             element.classList.add('barElement');
             element.style.height = barHeight + "%";
-            table.append(element)
+            table.append(element);
         })
     }
 
     const drawDefault = () => {
-        containerButtonSorts.innerHTML =""
-        const buttonSort = creatButtonSort("sort");
-        const buttonSortBubble = creatButtonSort("sort_bubble");
-
-        containerButtonSorts.append(buttonSort,buttonSortBubble);
-
-
-        buttonSortBubble.addEventListener("click", sortNumsBubble)
-        buttonSort.addEventListener("click", sortNums);
-
         numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
+
+        console.log(numArray);
+
+        if (numArray.length === 0) {
+            table.innerHTML = "";
+            containerButtonSorts.innerHTML = "";
+            alert("Не заданно значения!!!");
+            return;
+        }
+
         drawHistogram();
     }
 
