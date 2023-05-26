@@ -1,31 +1,16 @@
 const histogram = () => {
     const table = document.getElementById('container');
-    const inputElement = document.getElementById("input");
+    const containerButtonSorts = document.getElementById('container-button_sorts')
+    const inputElement = document.getElementById('input');
     const buttonInput = document.getElementById('button-input');
-    const buttonSort = document.getElementById("button-sort");
-    const buttonSortBubble = document.getElementById('button-sort_bubble');
 
     let numArray = [];
-    const drawHistogram = () => {
-        table.innerHTML = "";
-        const maxNum = Math.max(...numArray);
 
-        numArray.forEach((num) => {
-
-            const element = document.createElement("div");
-            const barHeight = ((num / maxNum) * 100);
-
-            element.innerText = num;
-            element.classList.add('barElement');
-            element.style.height = barHeight + "%";
-            table.append(element)
-        })
-
-    }
-
-    const drawDefault = () => {
-        numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
-        drawHistogram();
+    const creatButtonSort = (elementName) => {
+        const button = document.createElement("button");
+        button.textContent = elementName.replace(/[_-]/," ");
+        button.id = `button-${elementName}`;
+        return button;
     }
 
     const sortNums = () => {
@@ -43,11 +28,39 @@ const histogram = () => {
                 }
             }
         }
-        drawHistogram()
+        drawHistogram();
     }
 
-    buttonSortBubble.addEventListener("click", sortNumsBubble)
-    buttonSort.addEventListener("click", sortNums);
+    const drawHistogram = () => {
+        table.innerHTML = "";
+        const maxNum = Math.max(...numArray);
+
+        numArray.forEach((num) => {
+            const element = document.createElement("div");
+            const barHeight = ((num / maxNum) * 100);
+
+            element.innerText = num;
+            element.classList.add('barElement');
+            element.style.height = barHeight + "%";
+            table.append(element)
+        })
+    }
+
+    const drawDefault = () => {
+        containerButtonSorts.innerHTML =""
+        const buttonSort = creatButtonSort("sort");
+        const buttonSortBubble = creatButtonSort("sort_bubble");
+
+        containerButtonSorts.append(buttonSort,buttonSortBubble);
+
+
+        buttonSortBubble.addEventListener("click", sortNumsBubble)
+        buttonSort.addEventListener("click", sortNums);
+
+        numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
+        drawHistogram();
+    }
+
     buttonInput.addEventListener("click", drawDefault);
 }
 
