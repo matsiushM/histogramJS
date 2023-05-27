@@ -19,16 +19,15 @@ const histogram = () => {
     }
 
     const sortNumsBubble = () => {
-        for (let i = 0; i < numArray.length; i++) {
-            for (let j = numArray.length - 1; j > i; j--) {
-                if (numArray[j] > numArray[j - 1]) {
-                    const num = numArray[j];
-                    numArray[j] = numArray[j - 1];
-                    numArray[j - 1] = num;
+        const nodeArray = table.childNodes;
+
+        for (let i = 0; i < nodeArray.length; i++) {
+            for (let j = nodeArray.length-1; j > i; j--) {
+                if (Number(nodeArray[j].innerText) > Number(nodeArray[j - 1].innerText)) {
+                    nodeArray[j].after(nodeArray[j-1]);
                 }
             }
         }
-        drawHistogram();
     }
 
     const drawHistogram = () => {
@@ -58,8 +57,6 @@ const histogram = () => {
 
     const drawDefault = () => {
         numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
-
-        console.log(numArray);
 
         if (numArray.length === 0) {
             table.innerHTML = "";
