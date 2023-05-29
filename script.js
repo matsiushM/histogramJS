@@ -7,7 +7,7 @@ const histogram = () => {
     const sortNumsBubble = () => {
         const nodeArray = histogramArea.childNodes;
         for (let i = 0; i < nodeArray.length; i++) {
-            for (let j = i; j < nodeArray.length - 1; j++) {
+            for (let j = 0; j < nodeArray.length-1-i; j++) {
                 if (Number(nodeArray[j].innerText) > Number(nodeArray[j + 1].innerText)) {
                     nodeArray[j + 1].after(nodeArray[j]);
                 }
@@ -32,15 +32,13 @@ const histogram = () => {
 
     const drawDefault = () => {
         const numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
-
         if (numArray.length === 0) {
             histogramArea.innerHTML = "";
-            sortButton.style.display = 'none';
+            sortButton.classList.add('hide')
             alert("Не заданно значения!!!");
             return;
         }
-
-        sortButton.style.display = "block";
+        sortButton.classList.remove('hide');
 
         drawHistogram(numArray);
     }

@@ -16,6 +16,10 @@
     margin: 5px;
 }
 
+.hide {
+    display: none;
+}
+
 .barElement {
     flex-grow: 1;
     max-height: 100%;
