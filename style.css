@@ -1,4 +1,4 @@
-#container{
+#histogramArea {
     display: flex;
     align-items: flex-end;
     max-width: 100%;
@@ -11,12 +11,12 @@
     /*grid-column-gap: 10px;*/
 }
 
-#container-button{
+#container-button {
     display: flex;
     margin: 5px;
 }
 
-.barElement{
+.barElement {
     flex-grow: 1;
     max-height: 100%;
     margin-right: 5px;
