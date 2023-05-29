@@ -30,7 +30,7 @@ const histogram = () => {
         })
     }
 
-    const drawDefault = () => {
+    const showHistogram = () => {
         const numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
         if (numArray.length === 0) {
             histogramArea.innerHTML = "";
@@ -43,7 +43,7 @@ const histogram = () => {
         drawHistogram(numArray);
     }
 
-    enterButton.addEventListener("click", drawDefault);
+    enterButton.addEventListener("click", showHistogram);
     sortButton.addEventListener("click",sortNumsBubble)
 }
 
