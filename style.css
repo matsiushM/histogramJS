@@ -26,4 +26,6 @@
     margin-right: 5px;
     background: yellowgreen;
     text-align: center;
+    transition: order 15s;
+
 }
