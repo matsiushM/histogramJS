@@ -13,27 +13,24 @@ const histogram = () => {
        const nodeArray = histogramArea.childNodes;
         for (let i = 0; i < nodeArray.length; i++) {
             for (let j = 0; j < nodeArray.length - 1 - i; j++) {
+                if (isStopped) {
+                    return;
+                }
                 if (Number(nodeArray[j].textContent) > Number(nodeArray[j + 1].textContent)) {
                     nodeArray[j + 1].after(nodeArray[j]);
                 }
-                await delay(200);
-
-                if (isStopped) {
-                    break; // Выход из функции
-                }
-            }
-            if (isStopped) {
-                break; // Выход из функции
+                await delay(300);
             }
         }
     }
 
-    const sortNums = () => {
+    const sortNums =  () => {
         const nodeArray = histogramArea.childNodes;
+
         for (let i = 0; i < nodeArray.length; i++) {
             nodeArray[i].style.order = Number(nodeArray[i].textContent);
         }
-    }
+    };
 
     const drawHistogram = (numArray) => {
         histogramArea.innerHTML = "";
