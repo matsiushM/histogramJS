@@ -6,35 +6,78 @@ const histogram = () => {
     const sortButton = document.getElementById('sortButton');
     const sortButtonOrder = document.getElementById('sortButtonOrder');
 
-    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-    let isStopped = false;
-    const sortNumsBubble = async () => {
-        isStopped = false;
-       const nodeArray = histogramArea.childNodes;
-        for (let i = 0; i < nodeArray.length; i++) {
-            for (let j = 0; j < nodeArray.length - 1 - i; j++) {
-                if (isStopped) {
-                    return;
-                }
-                if (Number(nodeArray[j].textContent) > Number(nodeArray[j + 1].textContent)) {
-                    nodeArray[j + 1].after(nodeArray[j]);
-                }
-                await delay(300);
-            }
-        }
-    }
-
-    const sortNums =  () => {
+    let animationInterval = null;
+    const sortNumsBubble = () => {
         const nodeArray = histogramArea.childNodes;
 
-        for (let i = 0; i < nodeArray.length; i++) {
-            nodeArray[i].style.order = Number(nodeArray[i].textContent);
-        }
-    };
+        let i = 0;
+        let j = 0;
+        const timeInterval = 500;
+
+        animationInterval = setInterval(() => {
+            if (i < nodeArray.length) {
+                if (j < nodeArray.length - 1 - i) {
+                    const currentNode = Number(nodeArray[j].textContent);
+                    const nextNode = Number(nodeArray[j + 1].textContent);
+
+                    if (currentNode > nextNode) {
+                        const temp = nodeArray[j].style.left;
+                        nodeArray[j].style.left = nodeArray[j + 1].style.left;
+                        nodeArray[j + 1].style.left = temp;
+                        nodeArray[j + 1].after(nodeArray[j]);
+                    }
+
+                    j++;
+                } else {
+                    i++;
+                    j = 0;
+                }
+            } else {
+                clearInterval(animationInterval);
+            }
+        }, timeInterval);
+    }
+
+    const sortNums = () => {
+        const nodeArray = histogramArea.childNodes;
+
+        let i = 0;
+        let j = 0;
+        const timeInterval = 500;
+
+        animationInterval = setInterval(() => {
+            if (i < nodeArray.length) {
+                if (j < nodeArray.length - 1 - i) {
+                    const currentNode = Number(nodeArray[j].style.order);
+                    const nextNode = Number(nodeArray[j + 1].style.order);
+
+                    if (currentNode > nextNode) {
+                        const temp = nodeArray[j].style.left;
+                        nodeArray[j].style.left = nodeArray[j + 1].style.left;
+                        nodeArray[j + 1].style.left = temp;
+                    }
+
+                    j++;
+                } else {
+                    i++;
+                    j = 0;
+                }
+            } else {
+                clearInterval(animationInterval);
+            }
+        }, timeInterval);
+    }
+
 
     const drawHistogram = (numArray) => {
         histogramArea.innerHTML = "";
         const maxNum = Math.max(...numArray);
+
+        const histogramWidth = histogramArea.offsetWidth;
+
+        const elementWidth = (histogramWidth / numArray.length) - 5;
+
+        let elementPosition = 0;
 
         numArray.forEach((num) => {
             const element = document.createElement("div");
@@ -42,13 +85,19 @@ const histogram = () => {
             element.innerText = num;
             element.classList.add('barElement');
             element.style.height = barHeight + "%";
+            element.style.width = elementWidth + "px";
+            element.style.left = elementPosition + "px";
+            elementPosition += 5 + elementWidth;
+            element.style.order = num;
             histogramArea.append(element);
         })
     }
 
     const showHistogram = () => {
-        isStopped = true;
         const numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
+
+        clearInterval(animationInterval);
+
         if (numArray.length === 0) {
             histogramArea.innerHTML = "";
             buttonPanel.classList.add('hide')
