@@ -7,17 +7,21 @@ const histogram = () => {
     let animationInterval = null;
     const sortNumsBubble = () => {
         clearInterval(animationInterval);
+
+        const TIME_INTERVAL = 1000;
         const nodeArray = Array.from(histogramArea.children);
 
         let i = 0;
         let j = 0;
-        const timeInterval = 1000;
+
 
         animationInterval = setInterval(() => {
             if (i < nodeArray.length) {
                 if (j < nodeArray.length - 1 - i) {
-
                     if (Number(nodeArray[j].textContent) > Number(nodeArray[j + 1].textContent)) {
+
+                        setInterval(nodeArray[j].style.background = "red", TIME_INTERVAL/2);
+
                         const tempLeft = nodeArray[j].style.left;
                         nodeArray[j].style.left = nodeArray[j + 1].style.left;
                         nodeArray[j + 1].style.left = tempLeft;
@@ -25,17 +29,19 @@ const histogram = () => {
                         const tempNode = nodeArray[j];
                         nodeArray[j] = nodeArray[j + 1];
                         nodeArray[j + 1] = tempNode;
-                    }
 
+                    }
+                    nodeArray[j].style.background = "";
                     j++;
                 } else {
+                    nodeArray[j].style.background = "";
                     i++;
                     j = 0;
                 }
             } else {
                 clearInterval(animationInterval);
             }
-        }, timeInterval);
+        }, TIME_INTERVAL);
     }
 
 
@@ -45,7 +51,7 @@ const drawHistogram = (numArray) => {
 
     const histogramWidth = histogramArea.offsetWidth;
 
-    const elementWidth = (histogramWidth / numArray.length) - 5;
+    const elementWidth = (histogramWidth / numArray.length);
 
     let elementPosition = 0;
 
@@ -55,9 +61,9 @@ const drawHistogram = (numArray) => {
         element.innerText = num;
         element.classList.add('barElement');
         element.style.height = barHeight + "%";
-        element.style.width = elementWidth + "px";
+        element.style.width = elementWidth - 5 + "px";
         element.style.left = elementPosition + "px";
-        elementPosition += 5 + elementWidth;
+        elementPosition += elementWidth;
         histogramArea.append(element);
     })
 }
