@@ -16,17 +16,22 @@ const histogram = () => {
 
         animationInterval = setInterval(() => {
             if (i < nodeArray.length) {
+                let node = nodeArray[j];
                 if (j < nodeArray.length - 1 - i) {
-                    nodeArray[j].style.background = "red";
-                    nodeArray[j + 1].style.background = "green";
+                    const nextNode = nodeArray[j+1];
+
+                    node.style.background = "red";
+                    nextNode.style.background = "green";
+
                     if (Number(nodeArray[j].textContent) > Number(nodeArray[j + 1].textContent)) {
-                        [nodeArray[j].style.left, nodeArray[j + 1].style.left, nodeArray[j], nodeArray[j + 1]]
-                            = [nodeArray[j + 1].style.left, nodeArray[j].style.left, nodeArray[j + 1], nodeArray[j]];
+                        [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
+                        [nodeArray[j], nodeArray[j + 1]] = [nodeArray[j + 1], nodeArray[j]]
                     }
-                    nodeArray[j].style.background = "";
+                    node = nodeArray[j];
+                    node.style.background = "";
                     j++;
                 } else {
-                    nodeArray[j].style.background = "";
+                    node.style.background = "";
                     i++;
                     j = 0;
                 }
@@ -44,7 +49,8 @@ const histogram = () => {
 
         const histogramWidth = histogramArea.offsetWidth;
 
-        const elementWidth = (histogramWidth / numArray.length) - 5;
+        const indent = 5;
+        const elementWidth = (histogramWidth / numArray.length) - indent;
         let elementPosition = 0;
 
         numArray.forEach((num) => {
@@ -55,7 +61,7 @@ const histogram = () => {
             element.style.height = barHeight + "%";
             element.style.width = elementWidth + "px";
             element.style.left = elementPosition + "px";
-            elementPosition += elementWidth + 5;
+            elementPosition += elementWidth + indent;
             histogramArea.append(element);
         })
     }
