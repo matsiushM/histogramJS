@@ -23,7 +23,7 @@ const histogram = () => {
                     node.style.background = "red";
                     nextNode.style.background = "green";
 
-                    if (Number(nodeArray[j].textContent) > Number(nodeArray[j + 1].textContent)) {
+                    if (Number(node.textContent) > Number(nextNode.textContent)) {
                         [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
                         [nodeArray[j], nodeArray[j + 1]] = [nodeArray[j + 1], nodeArray[j]]
                     }
