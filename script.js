@@ -18,7 +18,7 @@ const histogram = () => {
             if (i < nodeArray.length) {
                 let node = nodeArray[j];
                 if (j < nodeArray.length - 1 - i) {
-                    const nextNode = nodeArray[j+1];
+                    const nextNode = nodeArray[j + 1];
 
                     node.style.background = "red";
                     nextNode.style.background = "green";
@@ -44,13 +44,14 @@ const histogram = () => {
 
 
     const drawHistogram = (numArray) => {
+        const INDENT = 5;
+
         histogramArea.innerHTML = "";
+
         const maxNum = Math.max(...numArray);
 
         const histogramWidth = histogramArea.offsetWidth;
-
-        const indent = 5;
-        const elementWidth = (histogramWidth / numArray.length) - indent;
+        const elementWidth = (histogramWidth / numArray.length) - INDENT;
         let elementPosition = 0;
 
         numArray.forEach((num) => {
@@ -61,7 +62,7 @@ const histogram = () => {
             element.style.height = barHeight + "%";
             element.style.width = elementWidth + "px";
             element.style.left = elementPosition + "px";
-            elementPosition += elementWidth + indent;
+            elementPosition += elementWidth + INDENT;
             histogramArea.append(element);
         })
     }
