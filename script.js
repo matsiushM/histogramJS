@@ -13,10 +13,11 @@ const histogram = () => {
 
         let i = 0;
         let j = 0;
+        nodeArray[j].style.background = "green";
 
         animationInterval = setInterval(() => {
+            let node = nodeArray[j];
             if (i < nodeArray.length) {
-                let node = nodeArray[j];
                 if (j < nodeArray.length - 1 - i) {
                     const nextNode = nodeArray[j + 1];
 
@@ -28,7 +29,7 @@ const histogram = () => {
                         [nodeArray[j], nodeArray[j + 1]] = [nodeArray[j + 1], nodeArray[j]]
                     }
                     node = nodeArray[j];
-                    node.style.background = "";
+
                     j++;
                 } else {
                     node.style.background = "";
@@ -39,6 +40,7 @@ const histogram = () => {
                 i++;
                 clearInterval(animationInterval);
             }
+            node.style.background = "";
         }, TIME_INTERVAL);
     }
 
