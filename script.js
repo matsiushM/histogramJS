@@ -2,58 +2,90 @@ const histogram = () => {
     const histogramArea = document.getElementById('histogramArea');
     const inputElement = document.getElementById('input');
     const enterButton = document.getElementById('enterButton');
-    const buttonPanel = document.getElementById('buttonPanel');
     const sortButton = document.getElementById('sortButton');
-    const sortButtonOrder = document.getElementById('sortButtonOrder');
 
+    let animationInterval = null;
     const sortNumsBubble = () => {
-        const nodeArray = histogramArea.childNodes;
-        for (let i = 0; i < nodeArray.length; i++) {
-            for (let j = 0; j < nodeArray.length-1-i; j++) {
-                if (Number(nodeArray[j].innerText) > Number(nodeArray[j + 1].innerText)) {
-                    nodeArray[j + 1].after(nodeArray[j]);
+        clearInterval(animationInterval);
+
+        const TIME_INTERVAL = 1000;
+        const nodeArray = Array.from(histogramArea.children);
+
+        let i = 0;
+        let j = 0;
+        nodeArray[j].style.background = "green";
+
+        animationInterval = setInterval(() => {
+            let node = nodeArray[j];
+            if (i < nodeArray.length) {
+                if (j < nodeArray.length - 1 - i) {
+                    const nextNode = nodeArray[j + 1];
+
+                    node.style.background = "red";
+                    nextNode.style.background = "green";
+
+                    if (Number(node.textContent) > Number(nextNode.textContent)) {
+                        [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
+                        [nodeArray[j], nodeArray[j + 1]] = [nodeArray[j + 1], nodeArray[j]]
+                    }
+                    node = nodeArray[j];
+
+                    j++;
+                } else {
+                    node.style.background = "";
+                    i++;
+                    j = 0;
                 }
+            } else {
+                i++;
+                clearInterval(animationInterval);
             }
-        }
+            node.style.background = "";
+        }, TIME_INTERVAL);
     }
 
-    const sortNums= () => {
-        const nodeArray = histogramArea.childNodes;
-        for (let i = 0; i < nodeArray.length; i++) {
-            nodeArray[i].style.order = Number(nodeArray[i].innerText);
-        }
-    }
 
     const drawHistogram = (numArray) => {
+        const INDENT = 5;
+
         histogramArea.innerHTML = "";
+
         const maxNum = Math.max(...numArray);
 
-        numArray.forEach((num, index) => {
+        const histogramWidth = histogramArea.offsetWidth;
+        const elementWidth = (histogramWidth / numArray.length) - INDENT;
+        let elementPosition = 0;
+
+        numArray.forEach((num) => {
             const element = document.createElement("div");
             const barHeight = ((num / maxNum) * 100);
             element.innerText = num;
             element.classList.add('barElement');
             element.style.height = barHeight + "%";
+            element.style.width = elementWidth + "px";
+            element.style.left = elementPosition + "px";
+            elementPosition += elementWidth + INDENT;
             histogramArea.append(element);
         })
     }
 
     const showHistogram = () => {
         const numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
+        clearInterval(animationInterval);
+
         if (numArray.length === 0) {
             histogramArea.innerHTML = "";
-            buttonPanel.classList.add('hide')
+            sortButton.classList.add('hide')
             alert("Не заданно значения!!!");
             return;
         }
-        buttonPanel.classList.remove('hide');
+        sortButton.classList.remove('hide');
 
         drawHistogram(numArray);
     }
 
     enterButton.addEventListener("click", showHistogram);
-    sortButton.addEventListener("click",sortNumsBubble)
-    sortButtonOrder.addEventListener("click", sortNums)
+    sortButton.addEventListener("click", sortNumsBubble);
 }
 
 histogram();

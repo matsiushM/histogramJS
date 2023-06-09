@@ -7,13 +7,9 @@
     margin-top: 10px;
     border-bottom: 5px solid gray;
     border-left: 5px solid gray;
+    position: relative;
     /*grid-template-columns: repeat(auto-fill,50px);*/
     /*grid-column-gap: 10px;*/
-}
-
-#container-button {
-    display: flex;
-    margin: 5px;
 }
 
 .hide {
@@ -26,4 +22,6 @@
     margin-right: 5px;
     background: yellowgreen;
     text-align: center;
+    transition: left 1s ease-in-out;
+    position: absolute;
 }
