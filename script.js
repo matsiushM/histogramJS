@@ -8,28 +8,56 @@ const histogram = () => {
 
     let i = 0;
     let j = 0;
-    let currentNode;
-    let previousNode;
+    let k = 0;
     let nodeArray = [];
+    let nodeArrayHistory = [];
 
     const nextItr = () => {
-        if(i>0) currentNode.style.background = "";
+        if (i > 0){
+            nodeArray[i].style.background = "";
+            nodeArray[i-1].style.background =""
+        }
         nextStep();
         i++;
     }
     const backItr = () => {
+        if (i < nodeArray.length-1-j){
+            nodeArray[i].style.background = "";
+            nodeArray[i+1].style.background =""
+        }
         i--;
         backStep();
     }
 
     const backStep = () => {
-        backButton.classList.add('hide');
-            [currentNode.style.left, previousNode.style.left] = [previousNode.style.left, currentNode.style.left];
+        if(i < 0 && j===0){
+            backButton.classList.add('hide');
+            i=0;
+            return;
+        }
+
+        if(i < 0){
+            i = nodeArray.length-1-j;
+            j--;
+
+            nodeArray[0].style.background = "";
+            nodeArray[1].style.background =""
+        }
+
+        const node = nodeArray[i];
+        const nextNode = nodeArray[i + 1];
+
+        if(nodeArrayHistory[k-1]){
+            nextNode.style.background = "green";
+            node.style.background = "red";
+            [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
             [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
+        }
+        k--;
     }
 
     const nextStep = () => {
-        if (i === nodeArray.length-1 - j) {
+        if (i === nodeArray.length - 1 - j) {
             j++
             i = 0;
         }
@@ -37,27 +65,26 @@ const histogram = () => {
         const node = nodeArray[i];
         const nextNode = nodeArray[i + 1];
 
+        backButton.classList.remove('hide');
+
         node.style.background = "green";
+        nextNode.style.background= "red";
 
         if (Number(node.textContent) > Number(nextNode.textContent)) {
             [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
             [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
-            if (i > 0) {
-                backButton.classList.remove('hide');
-            }
+            nodeArrayHistory.push(true);
+        } else {
+            nodeArrayHistory.push(false);
         }
-        else{
-            backButton.classList.add('hide');
-        }
-        currentNode = node;
-        previousNode = nextNode;
+        k++;
     }
-
 
     const drawHistogram = (numArray) => {
         const INDENT = 5;
 
         histogramArea.innerHTML = "";
+        nodeArrayHistory = [];
 
         const maxNum = Math.max(...numArray);
 
