@@ -6,48 +6,47 @@ const histogram = () => {
     const nextButton = document.getElementById('nextButton');
     const backButton = document.getElementById('backButton');
 
-    let i = 0;
-    let j = 0;
-    let k = 0;
+    let i = 0;  // flag for internal iterations of sorting
+    let j = 0;  // flag for external iterations of sorting
+    let k = 0;  // flag for all iteration
     let nodeArray = [];
     let nodeArrayHistory = [];
 
     const nextItr = () => {
-        if (i > 0){
+        if (i > 0) {
             nodeArray[i].style.background = "";
-            nodeArray[i-1].style.background =""
+            nodeArray[i - 1].style.background = ""
         }
         nextStep();
         i++;
     }
     const backItr = () => {
-        if (i < nodeArray.length-1-j){
+        if (i < nodeArray.length - 1 - j) {
             nodeArray[i].style.background = "";
-            nodeArray[i+1].style.background =""
+            nodeArray[i + 1].style.background = ""
         }
         i--;
         backStep();
     }
 
     const backStep = () => {
-        if(i < 0 && j===0){
+        if (i < 0 && j === 0) {
             backButton.classList.add('hide');
-            i=0;
+            i = 0;
             return;
         }
 
-        if(i < 0){
-            i = nodeArray.length-1-j;
+        if (i < 0) {
+            i = nodeArray.length - 1 - j;
             j--;
-
             nodeArray[0].style.background = "";
-            nodeArray[1].style.background =""
+            nodeArray[1].style.background = "";
         }
 
         const node = nodeArray[i];
         const nextNode = nodeArray[i + 1];
 
-        if(nodeArrayHistory[k-1]){
+        if (nodeArrayHistory[k - 1]) {
             nextNode.style.background = "green";
             node.style.background = "red";
             [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
@@ -64,11 +63,11 @@ const histogram = () => {
 
         const node = nodeArray[i];
         const nextNode = nodeArray[i + 1];
+        if (i > 0) backButton.classList.remove('hide');
 
-        backButton.classList.remove('hide');
 
         node.style.background = "green";
-        nextNode.style.background= "red";
+        nextNode.style.background = "red";
 
         if (Number(node.textContent) > Number(nextNode.textContent)) {
             [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
@@ -85,6 +84,8 @@ const histogram = () => {
 
         histogramArea.innerHTML = "";
         nodeArrayHistory = [];
+        backButton.classList.add('hide');
+        k = 0;
 
         const maxNum = Math.max(...numArray);
 
