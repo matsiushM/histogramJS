@@ -24,7 +24,7 @@ const histogram = () => {
         i++;
     }
     const backItr = () => {
-        if (i < nodeArray.length - 1 - j) {
+        if (i < nodeArray.length - 1) {
             nodeArray[i].style.background = "";
             nodeArray[i + 1].style.background = "";
         }
