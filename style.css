@@ -24,15 +24,13 @@
     background: yellowgreen;
     align-items: center;
     justify-content: center;
-    transition-property: left, background;
-    transition-duration: 1s;
-    transition-timing-function: ease-in-out, ease;
+    transition: left 1s ease-in-out;
     position: absolute;
 }
 
-.barElement-redBacklight{
+.redBacklight{
     background: red;
 }
-.barElement-greenBacklight{
+.greenBacklight{
     background: green;
 }

@@ -40,8 +40,8 @@ const histogram = () => {
         const currentNode = nodeArray[i];
         const nextNode = nodeArray[i + 1];
 
-        currentNode.classList.add('barElement-redBacklight');
-        nextNode.classList.add('barElement-greenBacklight');
+        currentNode.classList.add('redBacklight');
+        nextNode.classList.add('greenBacklight');
 
         if (nodeArrayHistory[k - 1]) {
             [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
@@ -49,8 +49,8 @@ const histogram = () => {
         }
 
         setTimeout(()=>{
-            currentNode.classList.remove('barElement-redBacklight');
-            nextNode.classList.remove('barElement-greenBacklight');
+            currentNode.classList.remove('redBacklight');
+            nextNode.classList.remove('greenBacklight');
         },700)
         k--;
     }
@@ -65,8 +65,8 @@ const histogram = () => {
         const nextNode = nodeArray[i + 1];
 
 
-        currentNode.classList.add('barElement-greenBacklight');
-        nextNode.classList.add('barElement-redBacklight');
+        currentNode.classList.add('greenBacklight');
+        nextNode.classList.add('redBacklight');
 
         if (Number(currentNode.textContent) > Number(nextNode.textContent)) {
             [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
@@ -76,8 +76,8 @@ const histogram = () => {
             nodeArrayHistory.push(false);
         }
         setTimeout(()=>{
-            currentNode.classList.remove('barElement-greenBacklight');
-            nextNode.classList.remove('barElement-redBacklight');
+            currentNode.classList.remove('greenBacklight');
+            nextNode.classList.remove('redBacklight');
         },700)
         k++;
     }
