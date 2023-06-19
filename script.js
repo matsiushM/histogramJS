@@ -24,7 +24,7 @@ const histogram = () => {
     const backItr = () => {
         if (i < nodeArray.length - 1 - j) {
             nodeArray[i].style.background = "";
-            nodeArray[i + 1].style.background = ""
+            nodeArray[i + 1].style.background = "";
         }
         i--;
         backStep();
@@ -59,7 +59,7 @@ const histogram = () => {
 
     const nextStep = () => {
         if (i === nodeArray.length - 1 - j) {
-            j++
+            j++;
             i = 0;
         }
 
