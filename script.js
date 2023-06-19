@@ -14,20 +14,13 @@ const histogram = () => {
 
     const nextItr = () => {
         if (i > 0) {
-            nodeArray[i].style.background = "";
-            nodeArray[i - 1].style.background = "";
-
-        }else{
             backButton.classList.remove('hide');
         }
+        if(nodeArray.length - 1 - j === 0) return;
         nextStep();
         i++;
     }
     const backItr = () => {
-        if (i < nodeArray.length - 1) {
-            nodeArray[i].style.background = "";
-            nodeArray[i + 1].style.background = "";
-        }
         i--;
         backStep();
     }
@@ -42,20 +35,23 @@ const histogram = () => {
         if (i < 0) {
             i = nodeArray.length - 1 - j;
             j--;
-            nodeArray[0].style.background = "";
-            nodeArray[1].style.background = "";
         }
 
         const currentNode = nodeArray[i];
         const nextNode = nodeArray[i + 1];
 
-        nextNode.style.background = "green";
-        currentNode.style.background = "red";
+        currentNode.classList.add('barElement-redBacklight');
+        nextNode.classList.add('barElement-greenBacklight');
 
         if (nodeArrayHistory[k - 1]) {
             [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
             [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
         }
+
+        setTimeout(()=>{
+            currentNode.classList.remove('barElement-redBacklight');
+            nextNode.classList.remove('barElement-greenBacklight');
+        },700)
         k--;
     }
 
@@ -69,8 +65,8 @@ const histogram = () => {
         const nextNode = nodeArray[i + 1];
 
 
-        currentNode.style.background = "green";
-        nextNode.style.background = "red";
+        currentNode.classList.add('barElement-greenBacklight');
+        nextNode.classList.add('barElement-redBacklight');
 
         if (Number(currentNode.textContent) > Number(nextNode.textContent)) {
             [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
@@ -79,6 +75,10 @@ const histogram = () => {
         } else {
             nodeArrayHistory.push(false);
         }
+        setTimeout(()=>{
+            currentNode.classList.remove('barElement-greenBacklight');
+            nextNode.classList.remove('barElement-redBacklight');
+        },700)
         k++;
     }
 
