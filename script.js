@@ -6,16 +6,17 @@ const histogram = () => {
     const nextButton = document.getElementById('nextButton');
     const backButton = document.getElementById('backButton');
 
-    let i = 0;  // flag for internal iterations of sorting
-    let j = 0;  // flag for external iterations of sorting
-    let k = 0;  // flag for all iteration
+    let i = 0;  // internal iterations of sorting
+    let j = 0;  // external iterations of sorting
+    let k = 0;  // all iteration
     let nodeArray = [];
     let nodeArrayHistory = [];
 
     const nextItr = () => {
         if (i > 0) {
             nodeArray[i].style.background = "";
-            nodeArray[i - 1].style.background = ""
+            nodeArray[i - 1].style.background = "";
+            backButton.classList.remove('hide');
         }
         nextStep();
         i++;
@@ -43,13 +44,14 @@ const histogram = () => {
             nodeArray[1].style.background = "";
         }
 
-        const node = nodeArray[i];
+        const currentNode = nodeArray[i];
         const nextNode = nodeArray[i + 1];
 
+        nextNode.style.background = "green";
+        currentNode.style.background = "red";
+
         if (nodeArrayHistory[k - 1]) {
-            nextNode.style.background = "green";
-            node.style.background = "red";
-            [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
+            [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
             [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
         }
         k--;
@@ -61,16 +63,15 @@ const histogram = () => {
             i = 0;
         }
 
-        const node = nodeArray[i];
+        const currentNode = nodeArray[i];
         const nextNode = nodeArray[i + 1];
-        if (i > 0) backButton.classList.remove('hide');
 
 
-        node.style.background = "green";
+        currentNode.style.background = "green";
         nextNode.style.background = "red";
 
-        if (Number(node.textContent) > Number(nextNode.textContent)) {
-            [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
+        if (Number(currentNode.textContent) > Number(nextNode.textContent)) {
+            [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
             [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
             nodeArrayHistory.push(true);
         } else {

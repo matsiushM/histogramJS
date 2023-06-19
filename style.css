@@ -24,6 +24,7 @@
     background: yellowgreen;
     align-items: center;
     justify-content: center;
-    transition: all 1s ease-in-out;
+    transition: left 1s ease-in-out;
+    transition: background 1s ease-out;;
     position: absolute;
 }
