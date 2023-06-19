@@ -16,6 +16,8 @@ const histogram = () => {
         if (i > 0) {
             nodeArray[i].style.background = "";
             nodeArray[i - 1].style.background = "";
+
+        }else{
             backButton.classList.remove('hide');
         }
         nextStep();
