@@ -52,6 +52,11 @@ const histogram = () => {
             currentNode.classList.remove('redBacklight');
             nextNode.classList.remove('greenBacklight');
         });
+
+        histogramArea.removeEventListener("transitionend",() => {
+            currentNode.classList.remove('redBacklight');
+            nextNode.classList.remove('greenBacklight');
+        })
         k--;
     }
 
@@ -76,6 +81,11 @@ const histogram = () => {
             nodeArrayHistory.push(false);
         }
         histogramArea.addEventListener("transitionend", () => {
+            currentNode.classList.remove('greenBacklight');
+            nextNode.classList.remove('redBacklight');
+        });
+
+        histogramArea.removeEventListener("transitionend",() => {
             currentNode.classList.remove('greenBacklight');
             nextNode.classList.remove('redBacklight');
         });
