@@ -25,6 +25,11 @@ const histogram = () => {
         backStep();
     }
 
+    const removeBacklight = (currentNode, nextNode) => {
+        currentNode.classList.remove('greenBacklight');
+        nextNode.classList.remove('redBacklight');
+    }
+
     const backStep = () => {
         if (i < 0 && j === 0) {
             backButton.classList.add('hide');
@@ -47,16 +52,9 @@ const histogram = () => {
             [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
             [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
         }
-
-        histogramArea.addEventListener("transitionend", () => {
-            currentNode.classList.remove('redBacklight');
-            nextNode.classList.remove('greenBacklight');
-        });
-
-        histogramArea.removeEventListener("transitionend",() => {
-            currentNode.classList.remove('redBacklight');
-            nextNode.classList.remove('greenBacklight');
-        })
+        histogramArea.addEventListener("transitionend", () => removeBacklight(nextNode, currentNode));
+        setTimeout(() => histogramArea.removeEventListener("transitionend",
+            () => removeBacklight(nextNode, currentNode)), 700);
         k--;
     }
 
@@ -69,7 +67,6 @@ const histogram = () => {
         const currentNode = nodeArray[i];
         const nextNode = nodeArray[i + 1];
 
-
         currentNode.classList.add('greenBacklight');
         nextNode.classList.add('redBacklight');
 
@@ -80,15 +77,9 @@ const histogram = () => {
         } else {
             nodeArrayHistory.push(false);
         }
-        histogramArea.addEventListener("transitionend", () => {
-            currentNode.classList.remove('greenBacklight');
-            nextNode.classList.remove('redBacklight');
-        });
-
-        histogramArea.removeEventListener("transitionend",() => {
-            currentNode.classList.remove('greenBacklight');
-            nextNode.classList.remove('redBacklight');
-        });
+        histogramArea.addEventListener("transitionend", () => removeBacklight(currentNode, nextNode));
+        setTimeout(() => histogramArea.removeEventListener("transitionend",
+            () => removeBacklight(currentNode, nextNode)), 700);
         k++;
     }
 
