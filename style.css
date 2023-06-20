@@ -25,9 +25,6 @@
     align-items: center;
     justify-content: center;
     transition: left 1s ease-in-out, background 1s ease;
-    /*transition-property: left, background;*/
-    /*transition-duration: 1s, 1.5s;*/
-    /*transition-timing-function: ease, ease;*/
     position: absolute;
 }
 

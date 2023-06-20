@@ -16,18 +16,13 @@ const histogram = () => {
         if (i > 0) {
             backButton.classList.remove('hide');
         }
-        if (nodeArray.length - 1 - j === 0) return;
+        if(nodeArray.length - 1 - j === 0) return;
         nextStep();
         i++;
     }
     const backItr = () => {
         i--;
         backStep();
-    }
-
-    const removeBacklight = (currentNode, nextNode) => {
-        currentNode.classList.remove('greenBacklight');
-        nextNode.classList.remove('redBacklight');
     }
 
     const backStep = () => {
@@ -52,9 +47,11 @@ const histogram = () => {
             [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
             [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
         }
-        histogramArea.addEventListener("transitionend", () => removeBacklight(nextNode, currentNode));
-        setTimeout(() => histogramArea.removeEventListener("transitionend",
-            () => removeBacklight(nextNode, currentNode)), 700);
+
+        setTimeout(()=>{
+            currentNode.classList.remove('redBacklight');
+            nextNode.classList.remove('greenBacklight');
+        },1000);
         k--;
     }
 
@@ -66,7 +63,7 @@ const histogram = () => {
 
         const currentNode = nodeArray[i];
         const nextNode = nodeArray[i + 1];
-
+        
         currentNode.classList.add('greenBacklight');
         nextNode.classList.add('redBacklight');
 
@@ -77,9 +74,10 @@ const histogram = () => {
         } else {
             nodeArrayHistory.push(false);
         }
-        histogramArea.addEventListener("transitionend", () => removeBacklight(currentNode, nextNode));
-        setTimeout(() => histogramArea.removeEventListener("transitionend",
-            () => removeBacklight(currentNode, nextNode)), 700);
+        setTimeout(()=>{
+            currentNode.classList.remove('greenBacklight');
+            nextNode.classList.remove('redBacklight');
+        },1000);
         k++;
     }
 
