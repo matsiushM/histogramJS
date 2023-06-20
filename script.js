@@ -51,7 +51,7 @@ const histogram = () => {
         setTimeout(()=>{
             currentNode.classList.remove('redBacklight');
             nextNode.classList.remove('greenBacklight');
-        },700)
+        },1000);
         k--;
     }
 
@@ -78,7 +78,7 @@ const histogram = () => {
         setTimeout(()=>{
             currentNode.classList.remove('greenBacklight');
             nextNode.classList.remove('redBacklight');
-        },700)
+        },1000);
         k++;
     }
 

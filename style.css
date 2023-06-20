@@ -24,7 +24,9 @@
     background: yellowgreen;
     align-items: center;
     justify-content: center;
-    transition: left 1s ease-in-out;
+    transition-property: left, background;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out, ease;
     position: absolute;
 }
 
