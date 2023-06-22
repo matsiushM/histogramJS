@@ -13,7 +13,7 @@ const histogram = () => {
     let nodeArrayHistory = [];
 
     const nextItr = () => {
-        if (i < 1) {
+        if (j < 1) {
             backButton.classList.remove('hide');
         }
         if(nodeArray.length - 1 - j === 0) return;
@@ -25,7 +25,7 @@ const histogram = () => {
         backStep();
     }
 
-    const stepAnimation = (currentNode, nextNode) =>{
+    const swapElement = (currentNode, nextNode) =>{
         [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
         [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
     }
@@ -33,6 +33,7 @@ const histogram = () => {
     const backStep = () => {
         if (i < 0 && j === 0) {
             backButton.classList.add('hide');
+            nodeArrayHistory = [];
             i = 0;
             return;
         }
@@ -49,7 +50,7 @@ const histogram = () => {
         nextNode.classList.add('greenBacklight');
 
         if (nodeArrayHistory[k - 1]) {
-            stepAnimation(currentNode,nextNode);
+            swapElement(currentNode,nextNode);
         }
 
         setTimeout(()=>{
@@ -72,7 +73,7 @@ const histogram = () => {
         nextNode.classList.add('redBacklight');
 
         if (Number(currentNode.textContent) > Number(nextNode.textContent)) {
-            stepAnimation(currentNode,nextNode);
+            swapElement(currentNode,nextNode);
             nodeArrayHistory.push(true);
         } else {
             nodeArrayHistory.push(false);
