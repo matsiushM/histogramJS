@@ -8,20 +8,13 @@ const histogram = () => {
 
     let i = 0;  // internal iterations of sorting
     let j = 0;  // external iterations of sorting
-    let k = 0;  // all iteration
     let nodeArray = [];
     let nodeArrayHistory = [];
 
     const nextItr = () => {
-        if (j < 1) {
-            backButton.classList.remove('hide');
-        }
-        if(nodeArray.length - 1 - j === 0) return;
         nextStep();
-        i++;
     }
     const backItr = () => {
-        i--;
         backStep();
     }
 
@@ -31,9 +24,11 @@ const histogram = () => {
     }
 
     const backStep = () => {
+        i--;
+        const lengthHistory = nodeArrayHistory.length - 1;
+
         if (i < 0 && j === 0) {
             backButton.classList.add('hide');
-            nodeArrayHistory = [];
             i = 0;
             return;
         }
@@ -49,25 +44,30 @@ const histogram = () => {
         currentNode.classList.add('redBacklight');
         nextNode.classList.add('greenBacklight');
 
-        if (nodeArrayHistory[k - 1]) {
+        if (nodeArrayHistory[lengthHistory]) {
             swapElement(currentNode,nextNode);
         }
+
+        nodeArrayHistory.splice(lengthHistory,1);
 
         setTimeout(()=>{
             currentNode.classList.remove('redBacklight');
             nextNode.classList.remove('greenBacklight');
         },1000);
-        k--;
     }
 
     const nextStep = () => {
+        const currentNode = nodeArray[i];
+        const nextNode = nodeArray[i + 1];
+
         if (i === nodeArray.length - 1 - j) {
             j++;
             i = 0;
         }
 
-        const currentNode = nodeArray[i];
-        const nextNode = nodeArray[i + 1];
+        if (j < 1) backButton.classList.remove('hide');
+
+        if(nodeArray.length - 1 - j === 0) return;
 
         currentNode.classList.add('greenBacklight');
         nextNode.classList.add('redBacklight');
@@ -78,11 +78,13 @@ const histogram = () => {
         } else {
             nodeArrayHistory.push(false);
         }
+
         setTimeout(()=>{
             currentNode.classList.remove('greenBacklight');
             nextNode.classList.remove('redBacklight');
         },1000);
-        k++;
+
+        i++;
     }
 
     const drawHistogram = (numArray) => {
@@ -91,7 +93,6 @@ const histogram = () => {
         histogramArea.innerHTML = "";
         nodeArrayHistory = [];
         backButton.classList.add('hide');
-        k = 0;
 
         const maxNum = Math.max(...numArray);
 
