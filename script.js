@@ -13,7 +13,7 @@ const histogram = () => {
     let nodeArrayHistory = [];
 
     const nextItr = () => {
-        if (i > 0) {
+        if (i < 1) {
             backButton.classList.remove('hide');
         }
         if(nodeArray.length - 1 - j === 0) return;
@@ -23,6 +23,11 @@ const histogram = () => {
     const backItr = () => {
         i--;
         backStep();
+    }
+
+    const stepAnimation = (currentNode, nextNode) =>{
+        [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
+        [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
     }
 
     const backStep = () => {
@@ -44,8 +49,7 @@ const histogram = () => {
         nextNode.classList.add('greenBacklight');
 
         if (nodeArrayHistory[k - 1]) {
-            [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
-            [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
+            stepAnimation(currentNode,nextNode);
         }
 
         setTimeout(()=>{
@@ -63,13 +67,12 @@ const histogram = () => {
 
         const currentNode = nodeArray[i];
         const nextNode = nodeArray[i + 1];
-        
+
         currentNode.classList.add('greenBacklight');
         nextNode.classList.add('redBacklight');
 
         if (Number(currentNode.textContent) > Number(nextNode.textContent)) {
-            [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
-            [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
+            stepAnimation(currentNode,nextNode);
             nodeArrayHistory.push(true);
         } else {
             nodeArrayHistory.push(false);
