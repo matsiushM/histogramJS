@@ -50,9 +50,6 @@ const histogram = () => {
     }
 
     const nextItr = () => {
-        const currentNode = nodeArray[i];
-        const nextNode = nodeArray[i + 1];
-
         if (i === nodeArray.length - 1 - j) {
             j++;
             i = 0;
@@ -61,6 +58,9 @@ const histogram = () => {
         if (j < 1) backButton.classList.remove('hide');
 
         if(nodeArray.length - 1 - j === 0) return;
+
+        const currentNode = nodeArray[i];
+        const nextNode = nodeArray[i + 1];
 
         currentNode.classList.add('greenBacklight');
         nextNode.classList.add('redBacklight');
