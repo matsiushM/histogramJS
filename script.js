@@ -2,53 +2,90 @@ const histogram = () => {
     const histogramArea = document.getElementById('histogramArea');
     const inputElement = document.getElementById('input');
     const enterButton = document.getElementById('enterButton');
-    const sortButton = document.getElementById('sortButton');
+    const buttonPanel = document.getElementById('buttonPanel');
+    const nextButton = document.getElementById('nextButton');
+    const backButton = document.getElementById('backButton');
 
-    let animationInterval = null;
-    const sortNumsBubble = () => {
-        clearInterval(animationInterval);
+    let i = 0;  // internal iterations of sorting
+    let j = 0;  // external iterations of sorting
+    let nodeArray = [];
+    let nodeArrayHistory = [];
 
-        const TIME_INTERVAL = 1000;
-        const nodeArray = Array.from(histogramArea.children);
-
-        let i = 0;
-        let j = 0;
-        nodeArray[j].style.background = "green";
-
-        animationInterval = setInterval(() => {
-            let node = nodeArray[j];
-            if (i < nodeArray.length) {
-                if (j < nodeArray.length - 1 - i) {
-                    const nextNode = nodeArray[j + 1];
-
-                    node.style.background = "red";
-                    nextNode.style.background = "green";
-
-                    if (Number(node.textContent) > Number(nextNode.textContent)) {
-                        [node.style.left, nextNode.style.left] = [nextNode.style.left, node.style.left];
-                        [nodeArray[j], nodeArray[j + 1]] = [nodeArray[j + 1], nodeArray[j]]
-                    }
-                    node = nodeArray[j];
-
-                    j++;
-                } else {
-                    node.style.background = "";
-                    i++;
-                    j = 0;
-                }
-            } else {
-                i++;
-                clearInterval(animationInterval);
-            }
-            node.style.background = "";
-        }, TIME_INTERVAL);
+    const swapElement = (currentNode, nextNode) =>{
+        [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
+        [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
     }
 
+    const backItr = () => {
+        const lengthHistory = nodeArrayHistory.length - 1;
+        i--;
+
+        if (i < 0 && j === 0) {
+            backButton.classList.add('hide');
+            i = 0;
+            return;
+        }
+
+        if (i < 0) {
+            i = nodeArray.length - 1 - j;
+            j--;
+        }
+
+        const currentNode = nodeArray[i];
+        const nextNode = nodeArray[i + 1];
+
+        currentNode.classList.add('redBacklight');
+        nextNode.classList.add('greenBacklight');
+
+        if (nodeArrayHistory[lengthHistory]) {
+            swapElement(currentNode,nextNode);
+        }
+
+        nodeArrayHistory.pop();
+
+        setTimeout(()=>{
+            currentNode.classList.remove('redBacklight');
+            nextNode.classList.remove('greenBacklight');
+        },1000);
+    }
+
+    const nextItr = () => {
+        if(nodeArray.length - 1 - j === 0) return;
+
+        if (i === nodeArray.length - 1 - j) {
+            j++;
+            i = 0;
+        }
+
+        if (j < 1) backButton.classList.remove('hide');
+
+        const currentNode = nodeArray[i];
+        const nextNode = nodeArray[i + 1];
+
+        currentNode.classList.add('greenBacklight');
+        nextNode.classList.add('redBacklight');
+
+        if (Number(currentNode.textContent) > Number(nextNode.textContent)) {
+            swapElement(currentNode,nextNode);
+            nodeArrayHistory.push(true);
+        } else {
+            nodeArrayHistory.push(false);
+        }
+
+        setTimeout(()=>{
+            currentNode.classList.remove('greenBacklight');
+            nextNode.classList.remove('redBacklight');
+        },1000);
+
+        i++;
+    }
 
     const drawHistogram = (numArray) => {
         const INDENT = 5;
 
         histogramArea.innerHTML = "";
+        nodeArrayHistory = [];
+        backButton.classList.add('hide');
 
         const maxNum = Math.max(...numArray);
 
@@ -67,27 +104,29 @@ const histogram = () => {
             elementPosition += elementWidth + INDENT;
             histogramArea.append(element);
         })
+        nodeArray = Array.from(histogramArea.childNodes);
     }
 
     const showHistogram = () => {
         const numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
-        clearInterval(animationInterval);
+        j = 0;
+        i = 0;
 
         if (numArray.length === 0) {
             histogramArea.innerHTML = "";
-            sortButton.classList.add('hide')
+            buttonPanel.classList.add('hide')
             alert("Не заданно значения!!!");
             return;
         }
-        sortButton.classList.remove('hide');
+        buttonPanel.classList.remove('hide');
 
         drawHistogram(numArray);
     }
 
     enterButton.addEventListener("click", showHistogram);
-    sortButton.addEventListener("click", sortNumsBubble);
+    nextButton.addEventListener("click", nextItr);
+    backButton.addEventListener("click", backItr);
 }
-
 histogram();
 
 

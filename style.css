@@ -18,10 +18,19 @@
 
 .barElement {
     flex-grow: 1;
+    display: flex;
     max-height: 100%;
     margin-right: 5px;
     background: yellowgreen;
-    text-align: center;
-    transition: left 1s ease-in-out;
+    align-items: center;
+    justify-content: center;
+    transition: left 1s ease-in-out, background 1s ease;
     position: absolute;
+}
+
+.redBacklight{
+    background: red;
+}
+.greenBacklight{
+    background: green;
 }
