@@ -11,21 +11,14 @@ const histogram = () => {
     let nodeArray = [];
     let nodeArrayHistory = [];
 
-    const nextItr = () => {
-        nextStep();
-    }
-    const backItr = () => {
-        backStep();
-    }
-
     const swapElement = (currentNode, nextNode) =>{
         [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
         [nodeArray[i], nodeArray[i + 1]] = [nodeArray[i + 1], nodeArray[i]];
     }
 
-    const backStep = () => {
-        i--;
+    const backItr = () => {
         const lengthHistory = nodeArrayHistory.length - 1;
+        i--;
 
         if (i < 0 && j === 0) {
             backButton.classList.add('hide');
@@ -56,7 +49,7 @@ const histogram = () => {
         },1000);
     }
 
-    const nextStep = () => {
+    const nextItr = () => {
         const currentNode = nodeArray[i];
         const nextNode = nodeArray[i + 1];
 
