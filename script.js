@@ -27,7 +27,7 @@ const histogram = () => {
         }
 
         if (i < 0) {
-            i = nodeArray.length - 1 - j;
+            i = lengthHistory - j;
             j--;
         }
 
@@ -41,7 +41,7 @@ const histogram = () => {
             swapElement(currentNode,nextNode);
         }
 
-        nodeArrayHistory.splice(lengthHistory,1);
+        nodeArrayHistory.pop();
 
         setTimeout(()=>{
             currentNode.classList.remove('redBacklight');
