@@ -27,7 +27,7 @@ const histogram = () => {
         }
 
         if (i < 0) {
-            i = lengthHistory - j;
+            i = nodeArray.length - 1 - j;
             j--;
         }
 
@@ -50,14 +50,14 @@ const histogram = () => {
     }
 
     const nextItr = () => {
+        if(nodeArray.length - 1 - j === 0) return;
+
         if (i === nodeArray.length - 1 - j) {
             j++;
             i = 0;
         }
 
         if (j < 1) backButton.classList.remove('hide');
-
-        if(nodeArray.length - 1 - j === 0) return;
 
         const currentNode = nodeArray[i];
         const nextNode = nodeArray[i + 1];
