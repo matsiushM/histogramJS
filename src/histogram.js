@@ -3,6 +3,7 @@ export default class HistogramInstance {
     j = 0;
     nodeArray = [];
     nodeArrayHistory = [];
+
     nextButton = document.createElement("button");
     backButton = document.createElement("button");
 
@@ -111,8 +112,10 @@ export default class HistogramInstance {
             elementPosition += elementWidth + INDENT;
             histogram.append(element);
         })
+
         newHistogramItem.append(histogram);
         this.nodeArray = Array.from(histogram.childNodes);
+
         return newHistogramItem;
     }
 }

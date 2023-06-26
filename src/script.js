@@ -18,7 +18,6 @@ const histogram = () => {
         const histograms = new HistogramInstance(numArray, histogramWidth);
         histogramArea.append(histograms.drawHistogram())
     }
-
     enterButton.addEventListener("click", showHistogram);
 }
 histogram();
