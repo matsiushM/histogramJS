@@ -1,6 +1,6 @@
 import "./index.html";
 import "./style.css"
-import {HistogramInstance} from "./histogram";
+import HistogramInstance from "./histogram";
 
 const histogram = () => {
     const inputElement = document.getElementById('input');
@@ -15,7 +15,7 @@ const histogram = () => {
             return;
         }
 
-        const histograms = new HistogramInstance(numArray,histogramWidth);
+        const histograms = new HistogramInstance(numArray, histogramWidth);
         histogramArea.append(histograms.drawHistogram())
     }
 

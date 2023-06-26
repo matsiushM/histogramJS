@@ -1,11 +1,12 @@
-export class HistogramInstance{
+export default class HistogramInstance {
     i = 0;
     j = 0;
     nodeArray = [];
     nodeArrayHistory = [];
     nextButton = document.createElement("button");
     backButton = document.createElement("button");
-    constructor(numArray,histogramWidth) {
+
+    constructor(numArray, histogramWidth) {
         this.numArray = numArray;
         this.histogramWidth = histogramWidth
 
@@ -14,7 +15,8 @@ export class HistogramInstance{
 
         this.drawHistogram();
     }
-    swapElement = (currentNode, nextNode) =>{
+
+    swapElement = (currentNode, nextNode) => {
         [currentNode.style.left, nextNode.style.left] = [nextNode.style.left, currentNode.style.left];
         [this.nodeArray[this.i], this.nodeArray[this.i + 1]] = [this.nodeArray[this.i + 1], this.nodeArray[this.i]];
     }
@@ -40,18 +42,18 @@ export class HistogramInstance{
         nextNode.classList.add('greenBacklight');
 
         if (this.nodeArrayHistory[lengthHistory]) {
-            this.swapElement(currentNode,nextNode);
+            this.swapElement(currentNode, nextNode);
         }
 
         this.nodeArrayHistory.pop();
 
-        setTimeout(()=>{
+        setTimeout(() => {
             currentNode.classList.remove('redBacklight');
             nextNode.classList.remove('greenBacklight');
-        },1000);
+        }, 1000);
     }
     nextItr = () => {
-        if(this.nodeArray.length - 1 - this.j === 0) return;
+        if (this.nodeArray.length - 1 - this.j === 0) return;
 
         if (this.i === this.nodeArray.length - 1 - this.j) {
             this.j++;
@@ -67,16 +69,16 @@ export class HistogramInstance{
         nextNode.classList.add('redBacklight');
 
         if (Number(currentNode.textContent) > Number(nextNode.textContent)) {
-            this.swapElement(currentNode,nextNode);
+            this.swapElement(currentNode, nextNode);
             this.nodeArrayHistory.push(true);
         } else {
             this.nodeArrayHistory.push(false);
         }
 
-        setTimeout(()=>{
+        setTimeout(() => {
             currentNode.classList.remove('greenBacklight');
             nextNode.classList.remove('redBacklight');
-        },1000);
+        }, 1000);
         this.i++;
     }
     drawHistogram = () => {
