@@ -1,4 +1,4 @@
-#histogramArea {
+.histogramArea {
     display: flex;
     align-items: flex-end;
     max-width: 100%;
