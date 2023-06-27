@@ -1,18 +1,23 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require("path");
+const path = require('path');
+const {template} = require("@babel/core");
 
-const mode = "development";
+const mode = 'development';
+const target = 'web';
+const devtool = 'source-map'
 
 module.exports = {
     mode,
-    entry: path.resolve(__dirname, "src", "main.js"),
+    target,
+    devtool,
+    entry: path.resolve(__dirname, 'src', 'index.js'),
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, 'dist'),
         clean: true,
-        filename: "main.js",
+        filename: 'index.[contenthash].js',
     },
     plugins: [new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "src", "index.html"),
+        template: path.resolve(__dirname, 'src', 'index.html')
     })],
     module: {
         rules: [
@@ -30,10 +35,12 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ["@babel/preset-env"]
+                        presets: [
+                            ['@babel/preset-env', { targets: "defaults" }]
+                        ]
                     }
                 }
             }
         ]
-    },
-}
+    }
+};
