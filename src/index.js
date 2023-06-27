@@ -1,4 +1,3 @@
-
 import "./style.css";
 import HistogramItem from "./histogram.js";
 const histogram = () => {
