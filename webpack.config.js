@@ -5,11 +5,11 @@ const mode = "development";
 
 module.exports = {
     mode,
-    entry: path.resolve(__dirname, "src", "script.js"),
+    entry: path.resolve(__dirname, "src", "main.js"),
     output: {
         path: path.resolve(__dirname, "dist"),
         clean: true,
-        filename: "script.js"
+        filename: "main.js"
     },
     plugins: [new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "src", "index.html"),
@@ -30,9 +30,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: [
-                            [{ targets: "defaults" }]
-                        ]
+                        presets: ["@babel/preset-env"]
                     }
                 }
             }
