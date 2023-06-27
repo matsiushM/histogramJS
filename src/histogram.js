@@ -1,8 +1,8 @@
-export default class HistogramInstance {
+const INDENT = 5;
+const TIME_ANIMATION = 1000;
+export default class HistogramItem {
     currentIndex = 0;
     subIndex = 0;
-    INDENT = 5;
-    TIME_ANIMATION = 1000;
     nodeArray = [];
     nodeArrayHistory = [];
 
@@ -18,21 +18,21 @@ export default class HistogramInstance {
         [this.nodeArray[this.currentIndex], this.nodeArray[this.currentIndex + 1]] = [this.nodeArray[this.currentIndex + 1], this.nodeArray[this.currentIndex]];
     }
 
-    createButton = () => {
-        const nextButton = document.createElement("button");
-        const backButton = document.createElement("button");
+    createButton = (textButton) => {
+        const button = document.createElement("button");
 
-        nextButton.innerText = "Next step";
-        backButton.innerText = "Back step";
+        button.innerText = textButton;
 
-        nextButton.addEventListener("click", this.nextItr);
-        backButton.addEventListener("click", this.backItr);
+        if(button.innerText === "Next step") {
+            button.addEventListener("click", this.nextItr);
+        }else{
+            button.addEventListener("click", this.backItr);
+        }
 
-        return {nextButton, backButton};
+        return button;
     }
 
     backItr = () => {
-        const lengthHistory = this.nodeArrayHistory.length - 1;
         this.currentIndex--;
 
         if (this.currentIndex < 0 && this.subIndex === 0) {
@@ -51,16 +51,14 @@ export default class HistogramInstance {
         currentNode.classList.add('redBacklight');
         nextNode.classList.add('greenBacklight');
 
-        if (this.nodeArrayHistory[lengthHistory]) {
+        if (this.nodeArrayHistory.pop()) {
             this.swapElement(currentNode, nextNode);
         }
-
-        this.nodeArrayHistory.pop();
 
         setTimeout(() => {
             currentNode.classList.remove('redBacklight');
             nextNode.classList.remove('greenBacklight');
-        }, this.TIME_ANIMATION);
+        }, TIME_ANIMATION);
     }
 
     nextItr = () => {
@@ -70,8 +68,6 @@ export default class HistogramInstance {
             this.subIndex++;
             this.currentIndex = 0;
         }
-
-        if (this.j < 1) this.backButton.classList.remove('hide');
 
         const currentNode = this.nodeArray[this.currentIndex];
         const nextNode = this.nodeArray[this.currentIndex + 1];
@@ -88,7 +84,7 @@ export default class HistogramInstance {
         setTimeout(() => {
             currentNode.classList.remove('greenBacklight');
             nextNode.classList.remove('redBacklight');
-        }, this.TIME_ANIMATION);
+        }, TIME_ANIMATION);
         this.currentIndex++;
     }
 
@@ -97,7 +93,8 @@ export default class HistogramInstance {
         const histogram = document.createElement("div");
         const newHistogramItem = document.createElement("div");
 
-        const {nextButton, backButton} = this.createButton();
+        const nextButton = this.createButton("Next step");
+        const backButton = this.createButton("Back step");
 
         newHistogramItem.append(nextButton);
         newHistogramItem.append(backButton);
@@ -105,7 +102,7 @@ export default class HistogramInstance {
         histogram.classList.add("histogramArea")
         const maxNum = Math.max(...this.numArray);
 
-        const elementWidth = (this.histogramWidth / this.numArray.length) - this.INDENT;
+        const elementWidth = (this.histogramWidth / this.numArray.length) - INDENT;
         let elementPosition = 0;
 
         this.numArray.forEach((num) => {
@@ -116,7 +113,7 @@ export default class HistogramInstance {
             element.style.height = barHeight + "%";
             element.style.width = elementWidth + "px";
             element.style.left = elementPosition + "px";
-            elementPosition += elementWidth + this.INDENT;
+            elementPosition += elementWidth + INDENT;
             histogram.append(element);
         })
 

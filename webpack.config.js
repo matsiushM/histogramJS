@@ -9,7 +9,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "dist"),
         clean: true,
-        filename: "main.js"
+        filename: "main.js",
     },
     plugins: [new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "src", "index.html"),
@@ -36,5 +36,4 @@ module.exports = {
             }
             ]
     }
-
 }

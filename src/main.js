@@ -1,10 +1,9 @@
 import "./style.css";
-import HistogramInstance from "./histogram";
-
+import HistogramItem from "./histogram.js";
 const histogram = () => {
     const inputElement = document.getElementById('input');
     const enterButton = document.getElementById('enterButton');
-    const containerElement = document.getElementById('histogramArea');
+    const containerElement = document.getElementById('containerElement');
 
     const showHistogram = () => {
         const numArray = inputElement.value.trim().split(" ").filter(Number).map(Number);
@@ -14,7 +13,7 @@ const histogram = () => {
             return;
         }
 
-        const histograms = new HistogramInstance(numArray, histogramWidth);
+        const histograms = new HistogramItem(numArray, histogramWidth);
         containerElement.append(histograms.drawHistogram())
     }
     enterButton.addEventListener("click", showHistogram);
