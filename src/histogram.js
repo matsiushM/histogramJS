@@ -18,14 +18,12 @@ export default class HistogramItem {
         [this.nodeArray[this.currentIndex], this.nodeArray[this.currentIndex + 1]] = [this.nodeArray[this.currentIndex + 1], this.nodeArray[this.currentIndex]];
     }
 
-    createButton = (textButton, iteration) => {
+    ButtonIteration = (textButton, iteration) => {
         const button = document.createElement("button");
 
         button.innerText = textButton;
 
-
         button.addEventListener("click", iteration);
-
 
         return button;
     }
@@ -91,8 +89,8 @@ export default class HistogramItem {
         const histogram = document.createElement("div");
         const newHistogramItem = document.createElement("div");
 
-        const nextButton = this.createButton("Next step", this.nextItr);
-        const backButton = this.createButton("Back step", this.backItr);
+        const nextButton = this.ButtonIteration("Next step", this.nextItr);
+        const backButton = this.ButtonIteration("Back step", this.backItr);
 
         newHistogramItem.append(nextButton);
         newHistogramItem.append(backButton);

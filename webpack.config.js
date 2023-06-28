@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const {template} = require("@babel/core");
 
-const mode = 'development';
+const mode = process.env.NODE_ENV || "development"
 
 module.exports = {
     mode,
