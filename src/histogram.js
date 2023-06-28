@@ -1,14 +1,14 @@
 const INDENT = 5;
 const TIME_ANIMATION = 1000;
 export default class HistogramItem {
-    currentIndex = 0;
-    subIndex = 0;
-    nodeArray = [];
-    nodeArrayHistory = [];
-
     constructor(numArray, histogramWidth) {
         this.numArray = numArray;
         this.histogramWidth = histogramWidth
+
+        this.currentIndex = 0;
+        this.subIndex = 0;
+        this.nodeArray = [];
+        this.nodeArrayHistory = [];
 
         this.drawHistogram();
     }

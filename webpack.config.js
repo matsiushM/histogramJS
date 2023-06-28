@@ -3,13 +3,9 @@ const path = require('path');
 const {template} = require("@babel/core");
 
 const mode = 'development';
-const target = 'web';
-const devtool = 'source-map'
 
 module.exports = {
     mode,
-    target,
-    devtool,
     entry: path.resolve(__dirname, 'src', 'index.js'),
     output: {
         path: path.resolve(__dirname, 'dist'),
