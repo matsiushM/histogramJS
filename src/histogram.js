@@ -18,12 +18,12 @@ export default class HistogramItem {
         [this.nodeArray[this.currentIndex], this.nodeArray[this.currentIndex + 1]] = [this.nodeArray[this.currentIndex + 1], this.nodeArray[this.currentIndex]];
     }
 
-    ButtonIteration = (textButton, iteration) => {
+    createButton = (textButton, direction) => {
         const button = document.createElement("button");
 
         button.innerText = textButton;
 
-        button.addEventListener("click", iteration);
+        button.addEventListener("click", direction);
 
         return button;
     }
@@ -71,9 +71,9 @@ export default class HistogramItem {
         currentNode.classList.add('greenBacklight');
         nextNode.classList.add('redBacklight');
 
-        this.nodeArrayHistory.push(Number(currentNode.textContent) > Number(nextNode.textContent));
+        const needsSwap = this.nodeArrayHistory.push(Number(currentNode.textContent) > Number(nextNode.textContent));
 
-        if (Number(currentNode.textContent) > Number(nextNode.textContent)) {
+        if (needsSwap) {
             this.swapElement(currentNode, nextNode);
         }
 
@@ -85,12 +85,11 @@ export default class HistogramItem {
     }
 
     drawHistogram = () => {
-
         const histogram = document.createElement("div");
         const newHistogramItem = document.createElement("div");
 
-        const nextButton = this.ButtonIteration("Next step", this.nextItr);
-        const backButton = this.ButtonIteration("Back step", this.backItr);
+        const nextButton = this.createButton("Next step", this.nextItr);
+        const backButton = this.createButton("Back step", this.backItr);
 
         newHistogramItem.append(nextButton);
         newHistogramItem.append(backButton);
