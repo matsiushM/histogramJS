@@ -67,11 +67,12 @@ export default class HistogramItem {
 
         const currentNode = this.nodeArray[this.currentIndex];
         const nextNode = this.nodeArray[this.currentIndex + 1];
+        const needsSwap = Number(currentNode.textContent) > Number(nextNode.textContent)
 
         currentNode.classList.add('greenBacklight');
         nextNode.classList.add('redBacklight');
 
-        const needsSwap = this.nodeArrayHistory.push(Number(currentNode.textContent) > Number(nextNode.textContent));
+        this.nodeArrayHistory.push(needsSwap);
 
         if (needsSwap) {
             this.swapElement(currentNode, nextNode);
